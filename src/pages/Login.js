@@ -1,4 +1,5 @@
 import React from 'react';
+import { Connect } from 'react-redux';
 
 class Login extends React.Component {
   constructor() {
@@ -23,6 +24,10 @@ class Login extends React.Component {
     this.setState({
       [event.target.name]: event.target.value,
     }, () => this.buttonDisabledControl());
+  };
+
+  onClickPlayButton = () => {
+
   };
 
   render() {
@@ -57,6 +62,7 @@ class Login extends React.Component {
           type="button"
           data-testid="btn-play"
           disabled={ isButtonDisabled }
+          onClick={ this.onClickPlayButton }
         >
           Play
         </button>
@@ -65,4 +71,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default Connect()(Login);
