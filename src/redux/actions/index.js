@@ -6,3 +6,5 @@ export function saveAtLogin(email, name) {
     payload: { email, name },
   };
 }
+
+export const test = 'test';
