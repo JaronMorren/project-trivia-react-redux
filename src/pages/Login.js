@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getToken from '../services/getToken';
+import ButtonConfig from '../components/ButtonConfig';
 
 class Login extends React.Component {
   constructor() {
@@ -70,6 +71,7 @@ class Login extends React.Component {
         >
           Play
         </button>
+        <ButtonConfig />
       </form>
     );
   }
