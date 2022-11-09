@@ -1,5 +1,6 @@
 import React from 'react';
-import { Connect } from 'react-redux';
+import { connect } from 'react-redux';
+import { getTokenAct } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -27,7 +28,8 @@ class Login extends React.Component {
   };
 
   onClickPlayButton = () => {
-
+    const { dispatch } = this.props;
+    dispatch(getTokenAct(dispatch));
   };
 
   render() {
@@ -71,4 +73,4 @@ class Login extends React.Component {
   }
 }
 
-export default Connect()(Login);
+export default connect()(Login);
