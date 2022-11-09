@@ -7,6 +7,8 @@ const INITIAL_STATE = {
 
 const player = (state = INITIAL_STATE, actions) => {
   switch (actions.type) {
+  case 'SAVE_AT_LOGIN':
+    return { ...state, gravatarEmail: actions.payload.email, name: actions.payload.name };
   default:
     return state;
   }
