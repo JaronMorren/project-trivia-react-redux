@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { getTokenAct } from '../redux/actions';
+import PropTypes from 'prop-types';
+import getToken from '../services/getToken';
 
 class Login extends React.Component {
   constructor() {
@@ -27,9 +27,11 @@ class Login extends React.Component {
     }, () => this.buttonDisabledControl());
   };
 
-  onClickPlayButton = () => {
-    const { dispatch } = this.props;
-    dispatch(getTokenAct(dispatch));
+  onClickPlayButton = async () => {
+    const { history: { push } } = this.props;
+    const tokenData = await getToken();
+    localStorage.setItem('token', tokenData.token);
+    push('/game');
   };
 
   render() {
@@ -74,7 +76,7 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  dispatch: PropTypes.func,
+  push: PropTypes.func,
 }.isRequired;
 
-export default connect()(Login);
+export default Login;
