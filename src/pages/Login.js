@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import getToken from '../services/getToken';
 import ButtonConfig from '../components/ButtonConfig';
 
 class Login extends React.Component {
@@ -24,6 +26,13 @@ class Login extends React.Component {
     this.setState({
       [event.target.name]: event.target.value,
     }, () => this.buttonDisabledControl());
+  };
+
+  onClickPlayButton = async () => {
+    const { history: { push } } = this.props;
+    const tokenData = await getToken();
+    localStorage.setItem('token', tokenData.token);
+    push('/game');
   };
 
   render() {
@@ -58,6 +67,7 @@ class Login extends React.Component {
           type="button"
           data-testid="btn-play"
           disabled={ isButtonDisabled }
+          onClick={ this.onClickPlayButton }
         >
           Play
         </button>
@@ -66,5 +76,9 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  push: PropTypes.func,
+}.isRequired;
 
 export default Login;
