@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { saveAtLogin } from '../redux/actions';
@@ -35,13 +35,13 @@ class Login extends React.Component {
     const { history: { push } } = this.props;
     const tokenData = await getToken();
     localStorage.setItem('token', tokenData.token);
-    dispatch(saveAtLogin( emailInput, nameInput ))
+    dispatch(saveAtLogin(emailInput, nameInput));
     push('/game');
   };
 
   render() {
     const { emailInput, nameInput, isButtonDisabled } = this.state;
-    const { dispatch } = this.props;
+    // const { dispatch } = this.props;
     return (
       <form>
         <label htmlFor="email">
@@ -83,9 +83,9 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  push: PropTypes.func.isRequired
-  };
-
+  // dispatch: PropTypes.func.isRequired,
+  push: PropTypes.func.isRequired,
+  history: PropTypes.objectOf.isRequired,
+};
 
 export default connect()(Login);
