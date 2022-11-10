@@ -9,14 +9,27 @@ class Answers extends React.Component {
     this.state = {
       currentAnswer: 0,
       randomAnswers: [],
+      readyToRender: false,
     };
   }
 
   async componentDidMount() {
     const { dispatch } = this.props;
     await dispatch(getAnswersAct(dispatch));
-    this.randomQuestion();
+    this.validToken();
   }
+
+  validToken = () => {
+    const { answersResponseCode, history } = this.props;
+    const number = 3;
+    if (answersResponseCode === number) {
+      localStorage.clear();
+      history.push('/');
+    } else {
+      this.setState({ readyToRender: true });
+      this.randomQuestion();
+    }
+  };
 
   randomizerAnswers = (answers) => {
     const myArr = [...answers];
@@ -46,12 +59,12 @@ class Answers extends React.Component {
   };
 
   render() {
-    const { currentAnswer, randomAnswers } = this.state;
+    const { currentAnswer, randomAnswers, readyToRender } = this.state;
     const { answersResults } = this.props;
     return (
       <main>
         {
-          answersResults && (
+          readyToRender && (
             <>
               <h3
                 data-testid="question-category"
@@ -65,24 +78,27 @@ class Answers extends React.Component {
               </h2>
               <div data-testid="answer-options">
                 {
-                  randomAnswers.map((answer, index) => (
-                    <button
-                      key={ index }
-                      type="button"
-                      data-testid={ () => {
-                        if (answer === answersResults[currentAnswer].correct_answer) {
-                          return 'correct-answer';
-                        }
-                        const wrongAnswers = answersResults[currentAnswer]
-                          .incorrect_answers;
-                        const answerIndex = wrongAnswers.indexOf(answer);
-                        const result = `wrong-answer-${answerIndex}`;
-                        return result;
-                      } }
-                    >
-                      { answer }
-                    </button>
-                  ))
+                  randomAnswers.map((answer, index) => {
+                    const test = () => {
+                      if (answer === answersResults[currentAnswer].correct_answer) {
+                        return 'correct-answer';
+                      }
+                      const wrongAnswers = answersResults[currentAnswer]
+                        .incorrect_answers;
+                      const answerIndex = wrongAnswers.indexOf(answer);
+                      const result = `wrong-answer-${answerIndex}`;
+                      return result;
+                    };
+                    return (
+                      <button
+                        key={ index }
+                        type="button"
+                        data-testid={ test() }
+                      >
+                        { answer }
+                      </button>
+                    );
+                  })
                 }
               </div>
             </>
