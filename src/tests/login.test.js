@@ -36,7 +36,7 @@ describe('Testando a pagina Login.js', () => {
       expect(button).toBeEnabled();
       
       userEvent.click(button)    
-      setTimeout(() => {}, 10000)
+      setTimeout(() => {}, 3000)
             
       const { pathname } = history.location
       expect(pathname).toBe('/game');      
