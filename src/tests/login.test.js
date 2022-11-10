@@ -23,12 +23,11 @@ describe('Testando a pagina Login.js', () => {
     expect(inputName.type).toBe("text")
   });
     test('Verifica que ao digitar o email e nome, o botão Play é habilitado', async () => {
-    renderWithRouterAndRedux(<App />)
+    const { history: { location } } = renderWithRouterAndRedux(<App />)
+    const { pathname } = location
     const inputEmail = screen.getByLabelText("Email:")
     const inputName = screen.getByLabelText("Nome:")
-    const button = screen.getByRole("button", {
-      name: /play/i
-    })
+    const button = screen.getByTestId("btn-play")
 
     expect(button).toBeDisabled();
     userEvent.type(inputEmail, "23"), 
@@ -39,12 +38,10 @@ describe('Testando a pagina Login.js', () => {
 
     userEvent.click(button)    
 
-    const gamePage = await screen.findByText(/game/i)
+    const gamePage = await screen.findByRole("img")
 
     expect(gamePage).toBeInTheDocument()
-    expect(pathname).toBe('/game');   
-    
-    expect(global.localStorage.setItem).toHaveBeenCalled()
+    expect(pathname).toBe('/game');      
   }); 
 
   
