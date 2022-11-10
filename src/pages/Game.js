@@ -1,13 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import Header from '../components/Header';
+// import { connect } from 'react-redux';
+// import Header from '../components/Header';
 
 class Game extends React.Component {
   render() {
     return (
-      <Header />
+      <div>
+        <h1>Game</h1>
+        {/* <Header /> */}
+      </div>
     );
   }
 }
 
-export default connect()(Game);
+// export default connect()(Game);
+export default Game;
