@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { saveAtLogin } from '../redux/actions';
@@ -32,7 +31,8 @@ class Login extends React.Component {
   };
 
   onClickPlayButton = async () => {
-    const { history: { push } } = this.props;
+    const { emailInput, nameInput } = this.state;
+    const { history: { push }, dispatch } = this.props;
     const tokenData = await getToken();
     localStorage.setItem('token', tokenData.token);
     dispatch(saveAtLogin(emailInput, nameInput));
@@ -41,7 +41,6 @@ class Login extends React.Component {
 
   render() {
     const { emailInput, nameInput, isButtonDisabled } = this.state;
-    // const { dispatch } = this.props;
     return (
       <form>
         <label htmlFor="email">
@@ -83,9 +82,8 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
-  push: PropTypes.func.isRequired,
-  history: PropTypes.objectOf.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.func.isRequired,
 };
 
 export default connect()(Login);

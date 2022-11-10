@@ -7,7 +7,7 @@ class Header extends React.Component {
   constructor() {
     super();
     this.state = {
-      hash: '',
+      hash: undefined,
     };
   }
 
@@ -23,9 +23,13 @@ class Header extends React.Component {
     const { hash } = this.state;
     return (
       <header>
-        <img data-testid="header-profile-picture" alt="profile" src={ `https://www.gravatar.com/avatar/${hash}` } />
-        <h2 data-testid="header-player-name">{ name }</h2>
-        <h2 data-testid="header-score">{score}</h2>
+        {hash && (
+          <>
+            <img data-testid="header-profile-picture" alt="profile" src={ `https://www.gravatar.com/avatar/${hash}` } />
+            <h2 data-testid="header-player-name">{ name }</h2>
+            <h2 data-testid="header-score">{score}</h2>
+          </>
+        )}
       </header>
     );
   }
@@ -34,7 +38,7 @@ class Header extends React.Component {
 const mapStateToProps = (state) => ({
   name: state.player.name,
   score: state.player.score,
-  email: state.player.email,
+  email: state.player.gravatarEmail,
 });
 
 Header.propTypes = {
