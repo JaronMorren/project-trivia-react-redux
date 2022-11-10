@@ -23,25 +23,23 @@ describe('Testando a pagina Login.js', () => {
     expect(inputName.type).toBe("text")
   });
     test('Verifica que ao digitar o email e nome, o botão Play é habilitado', async () => {
-    const { history: { location } } = renderWithRouterAndRedux(<App />)
-    const { pathname } = location
-    const inputEmail = screen.getByLabelText("Email:")
-    const inputName = screen.getByLabelText("Nome:")
-    const button = screen.getByTestId("btn-play")
-
-    expect(button).toBeDisabled();
-    userEvent.type(inputEmail, "23"), 
-    expect(inputEmail.value).toBe("23");
-    userEvent.type(inputName, "33"), 
-    expect(inputName.value).toBe("33");
-    expect(button).toBeEnabled();
-
-    userEvent.click(button)    
-
-    const gamePage = await screen.findByRole("img")
-
-    expect(gamePage).toBeInTheDocument()
-    expect(pathname).toBe('/game');      
+      const { history } = renderWithRouterAndRedux(<App />)
+      const inputEmail = screen.getByLabelText("Email:")
+      const inputName = screen.getByLabelText("Nome:")
+      const button = screen.getByTestId("btn-play")
+      
+      expect(button).toBeDisabled();
+      userEvent.type(inputEmail, "23"), 
+      expect(inputEmail.value).toBe("23");
+      userEvent.type(inputName, "33"), 
+      expect(inputName.value).toBe("33");
+      expect(button).toBeEnabled();
+      
+      userEvent.click(button)    
+      setTimeout(() => {}, 10000)
+            
+      const { pathname } = history.location
+      expect(pathname).toBe('/game');      
   }); 
 
   
