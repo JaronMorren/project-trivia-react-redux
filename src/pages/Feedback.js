@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Header from '../components/Header';
 
 // https://github.com/chrisblakely01/quiz-app/blob/master/final/src/App.js
 
@@ -11,11 +12,22 @@ class Feedback extends React.Component {
     console.log(playerScore);
 
     if (playerScore < minimumScore) {
-      return <h1 data-testid="feedback-text">Could be better...</h1>;
+      return (
+        <>
+          <Header />
+          <h1 data-testid="feedback-text">Could be better...</h1>
+        </>
+      );
     }
 
     if (playerScore >= minimumScore) {
-      return <h1 data-testid="feedback-text">Well Done!</h1>;
+      return (
+        <>
+          <Header />
+          <h1 data-testid="feedback-text">Well Done!</h1>
+          ;
+        </>
+      );
     }
   }
 }
