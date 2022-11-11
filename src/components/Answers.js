@@ -39,8 +39,8 @@ class Answers extends React.Component {
     }
   };
 
-  timer = () => {
-    this.setState({ secondsLeft: 30 });
+  timer = async () => {
+    await this.setState({ secondsLeft: 30 });
     let { secondsLeft } = this.state;
     const segundo = 1000;
     const interval = setInterval(() => {
@@ -92,7 +92,9 @@ class Answers extends React.Component {
     this.setState({
       currentAnswer: currentAnswer += 1,
       nextQuestion: false,
+      answerClass: '',
     });
+    this.randomQuestion();
     this.timer();
   };
 
