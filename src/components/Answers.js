@@ -75,6 +75,10 @@ class Answers extends React.Component {
     }
   };
 
+  onClickAnswerButton = () => {
+
+  };
+
   render() {
     const { currentAnswer, randomAnswers, readyToRender, buttonDislable } = this.state;
     const { answersResults } = this.props;
@@ -112,6 +116,7 @@ class Answers extends React.Component {
                         type="button"
                         data-testid={ test() }
                         disabled={ buttonDislable }
+                        onClick={ this.onClickAnswerButton }
                       >
                         { answer }
                       </button>
