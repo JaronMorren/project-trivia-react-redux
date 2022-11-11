@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getAnswersAct } from '../redux/actions';
+import { getAnswersAct, updateScore } from '../redux/actions';
 import ButtonNext from './ButtonNext';
+import '../style/Questions.css';
 
 class Answers extends React.Component {
   constructor() {
@@ -14,6 +15,8 @@ class Answers extends React.Component {
       secondsLeft: 30,
       buttonDislable: false,
       nextQuestion: false,
+      answerClass: '',
+      interval: 0,
     };
   }
 
@@ -39,15 +42,15 @@ class Answers extends React.Component {
   timer = () => {
     let { secondsLeft } = this.state;
     const segundo = 1000;
-    const iterval = setInterval(() => {
+    const interval = setInterval(() => {
       if (secondsLeft > 0) {
         this.setState({ secondsLeft: secondsLeft -= 1 });
-        console.log(secondsLeft);
       } else {
         this.setState({ buttonDislable: true });
-        clearInterval(iterval);
+        clearInterval(interval);
       }
     }, segundo);
+    this.setState({ interval });
   };
 
   randomizerAnswers = (answers) => {
@@ -77,17 +80,44 @@ class Answers extends React.Component {
     }
   };
 
-  nextButton = () => {
+   nextButton = () => {
     // const { nextQuestion } = this.state;
     this.setState({ nextQuestion: true });
+   };
+    classNameControll = (clicked) => {
+    if (clicked === true) {
+      this.setState({
+        answerClass: '-clicked',
+      });
+    }
+  };
+
+  click = (event) => {
+    const { interval, currentAnswer, secondsLeft } = this.state;
+    clearInterval(interval);
+    this.classNameControll(true);
+    const { answersResults, dispatch } = this.props;
+    const correctAnswer = answersResults[currentAnswer].correct_answer;
+    const difficultyNumber = {
+      hard: 3, medium: 2, easy: 1,
+    };
+    const { difficulty } = answersResults[currentAnswer];
+    const ten = 10;
+    if (event.target.innerHTML === correctAnswer) {
+      dispatch(updateScore(ten + (difficultyNumber[difficulty] * secondsLeft)));
+    }
+    this.nextButton();
   };
 
   render() {
-    const { currentAnswer,
+    const {
+      currentAnswer,
       randomAnswers,
       readyToRender,
       buttonDislable,
-      nextQuestion } = this.state;
+      answerClass,
+      nextQuestion,
+    } = this.state;
     const { answersResults } = this.props;
     return (
       <main>
@@ -121,9 +151,10 @@ class Answers extends React.Component {
                       <button
                         key={ index }
                         type="button"
+                        className={ `${test()}${answerClass}` }
                         data-testid={ test() }
                         disabled={ buttonDislable }
-                        onClick={ this.nextButton }
+                        onClick={ this.click }
                       >
                         { answer }
                       </button>
