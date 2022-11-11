@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getAnswersAct } from '../redux/actions';
+import { getAnswersAct, updateScore } from '../redux/actions';
 import '../style/Questions.css';
 
 class Answers extends React.Component {
@@ -14,6 +14,7 @@ class Answers extends React.Component {
       secondsLeft: 30,
       buttonDislable: false,
       answerClass: '',
+      interval: 0,
     };
   }
 
@@ -39,15 +40,15 @@ class Answers extends React.Component {
   timer = () => {
     let { secondsLeft } = this.state;
     const segundo = 1000;
-    const iterval = setInterval(() => {
+    const interval = setInterval(() => {
       if (secondsLeft > 0) {
         this.setState({ secondsLeft: secondsLeft -= 1 });
-        console.log(secondsLeft);
       } else {
         this.setState({ buttonDislable: true });
-        clearInterval(iterval);
+        clearInterval(interval);
       }
     }, segundo);
+    this.setState({ interval });
   };
 
   randomizerAnswers = (answers) => {
@@ -85,8 +86,20 @@ class Answers extends React.Component {
     }
   };
 
-  onClickAnswerButton = () => {
+  click = (event) => {
+    const { interval, currentAnswer, secondsLeft } = this.state;
+    clearInterval(interval);
     this.classNameControll(true);
+    const { answersResults, dispatch } = this.props;
+    const correctAnswer = answersResults[currentAnswer].correct_answer;
+    const difficultyNumber = {
+      hard: 3, medium: 2, easy: 1,
+    };
+    const { difficulty } = answersResults[currentAnswer];
+    const ten = 10;
+    if (event.target.innerHTML === correctAnswer) {
+      dispatch(updateScore(ten + (difficultyNumber[difficulty] * secondsLeft)));
+    }
   };
 
   render() {
@@ -129,7 +142,7 @@ class Answers extends React.Component {
                         className={ `${test()}${answerClass}` }
                         data-testid={ test() }
                         disabled={ buttonDislable }
-                        onClick={ this.onClickAnswerButton }
+                        onClick={ this.click }
                       >
                         { answer }
                       </button>
