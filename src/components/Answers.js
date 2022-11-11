@@ -40,6 +40,7 @@ class Answers extends React.Component {
   };
 
   timer = () => {
+    this.setState({ secondsLeft: 30 });
     let { secondsLeft } = this.state;
     const segundo = 1000;
     const interval = setInterval(() => {
@@ -81,8 +82,18 @@ class Answers extends React.Component {
   };
 
   nextButton = () => {
-    // const { nextQuestion } = this.state;
-    this.setState({ nextQuestion: true });
+    this.setState({
+      nextQuestion: true,
+    });
+  };
+
+  onClickNextButton = () => {
+    let { currentAnswer } = this.state;
+    this.setState({
+      currentAnswer: currentAnswer += 1,
+      nextQuestion: false,
+    });
+    this.timer();
   };
 
   classNameControll = (clicked) => {
@@ -118,6 +129,7 @@ class Answers extends React.Component {
       buttonDislable,
       answerClass,
       nextQuestion,
+      secondsLeft,
     } = this.state;
     const { answersResults } = this.props;
     return (
@@ -162,9 +174,11 @@ class Answers extends React.Component {
                     );
                   })
                 }
-                { nextQuestion ? <ButtonNext /> : null }
+                { nextQuestion ? <ButtonNext
+                  onClickNextButton={ this.onClickNextButton }
+                /> : null }
               </div>
-
+              <p>{ secondsLeft }</p>
             </>
           )
         }
