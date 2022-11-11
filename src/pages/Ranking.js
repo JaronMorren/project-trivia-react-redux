@@ -26,6 +26,7 @@ class Ranking extends React.Component {
     const { playersData } = this.state;
     return (
       <>
+        <h2 data-testid="ranking-title">Ranking</h2>
         <section>
           {
             playersData.map((playerData, index) => (
@@ -50,6 +51,7 @@ class Ranking extends React.Component {
         </section>
         <ButtonLogin />
       </>
+
     );
   }
 }
