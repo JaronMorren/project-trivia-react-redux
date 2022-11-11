@@ -7,7 +7,7 @@ class ButtonRanking extends React.Component {
       <Link to="/ranking">
         <button
           type="button"
-          data-testid="ranking-title"
+          data-testid="btn-ranking"
         >
           Ranking
         </button>
