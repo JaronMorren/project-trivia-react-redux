@@ -5,7 +5,10 @@ import ButtonLogin from '../components/ButtonLogin';
 class Ranking extends React.Component {
   render() {
     return (
-      <ButtonLogin />
+      <>
+        <p>teste</p>
+        <ButtonLogin />
+      </>
     );
   }
 }
