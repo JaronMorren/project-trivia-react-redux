@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getAnswersAct } from '../redux/actions';
+import { getAnswersAct, updateScore } from '../redux/actions';
 
 class Answers extends React.Component {
   constructor() {
@@ -12,6 +12,7 @@ class Answers extends React.Component {
       readyToRender: false,
       secondsLeft: 30,
       buttonDislable: false,
+      interval: 0,
     };
   }
 
@@ -37,15 +38,15 @@ class Answers extends React.Component {
   timer = () => {
     let { secondsLeft } = this.state;
     const segundo = 1000;
-    const iterval = setInterval(() => {
+    const interval = setInterval(() => {
       if (secondsLeft > 0) {
         this.setState({ secondsLeft: secondsLeft -= 1 });
-        console.log(secondsLeft);
       } else {
         this.setState({ buttonDislable: true });
-        clearInterval(iterval);
+        clearInterval(interval);
       }
     }, segundo);
+    this.setState({ interval });
   };
 
   randomizerAnswers = (answers) => {
@@ -72,6 +73,21 @@ class Answers extends React.Component {
       this.setState({
         randomAnswers,
       });
+    }
+  };
+
+  click = (event) => {
+    const { interval, currentAnswer, secondsLeft } = this.state;
+    clearInterval(interval);
+    const { answersResults, dispatch } = this.props;
+    const correctAnswer = answersResults[currentAnswer].correct_answer;
+    const difficultyNumber = {
+      hard: 3, medium: 2, easy: 1,
+    };
+    const { difficulty } = answersResults[currentAnswer];
+    const ten = 10;
+    if (event.target.innerHTML === correctAnswer) {
+      dispatch(updateScore(ten + (difficultyNumber[difficulty] * secondsLeft)));
     }
   };
 
@@ -112,6 +128,7 @@ class Answers extends React.Component {
                         type="button"
                         data-testid={ test() }
                         disabled={ buttonDislable }
+                        onClick={ this.click }
                       >
                         { answer }
                       </button>
