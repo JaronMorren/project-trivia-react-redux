@@ -89,13 +89,14 @@ class Answers extends React.Component {
 
   onClickNextButton = () => {
     let { currentAnswer } = this.state;
-    this.setState({
+    this.setState(({
       currentAnswer: currentAnswer += 1,
       nextQuestion: false,
       answerClass: '',
+    }), () => {
+      this.randomQuestion();
+      this.timer();
     });
-    this.randomQuestion();
-    this.timer();
   };
 
   classNameControll = (clicked) => {
