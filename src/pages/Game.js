@@ -5,6 +5,25 @@ import Header from '../components/Header';
 import Answers from '../components/Answers';
 
 class Game extends React.Component {
+  componentWillUnmount() {
+    this.savePlayerData();
+  }
+
+  savePlayerData = () => {
+    const { name, score, email } = this.props;
+    const currentPlayerData = { name, score, email };
+    if (!localStorage.getItem('playersData')) {
+      console.log('foi');
+      localStorage.setItem('playersData', JSON.stringify([]));
+    }
+    const playersData = JSON.parse(localStorage.getItem('playersData'));
+    console.log(playersData);
+    console.log(currentPlayerData);
+    playersData.push(currentPlayerData);
+
+    localStorage.setItem('playersData', JSON.stringify(playersData));
+  };
+
   render() {
     const { history } = this.props;
     return (
@@ -16,8 +35,14 @@ class Game extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  name: state.player.name,
+  score: state.player.score,
+  email: state.player.gravatarEmail,
+});
+
 Game.propTypes = {
   history: PropTypes.shape,
 }.isRequired;
 
-export default connect()(Game);
+export default connect(mapStateToProps)(Game);
