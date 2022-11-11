@@ -36,7 +36,7 @@ Feedback.propTypes = {
 };
 
 const mapStateToProps = (globalState) => ({
-  playerScore: globalState.player.playerScore,
+  playerScore: globalState.player.correctAnswers,
 });
 
 export default connect(mapStateToProps)(Feedback);

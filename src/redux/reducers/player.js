@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   assertions: 0, // número-de-acertos,
   score: 0, // pontuação,
   gravatarEmail: '', // email-da-pessoa,
+  correctAnswers: 0,
 };
 
 const player = (state = INITIAL_STATE, actions) => {
@@ -18,7 +19,8 @@ const player = (state = INITIAL_STATE, actions) => {
   case UPDATE_SCORE:
     return {
       ...state,
-      score: state.score + actions.payload,
+      score: state.score + actions.payload.score,
+      correctAnswers: state.correctAnswers + actions.payload.answers,
     };
   default:
     return state;

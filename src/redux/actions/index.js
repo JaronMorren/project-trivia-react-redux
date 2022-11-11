@@ -30,6 +30,7 @@ export const getAnswersAct = (dispatch) => async () => {
 export function updateScore(score) {
   return {
     type: UPDATE_SCORE,
-    payload: score,
+    payload: { score,
+      answers: 1 },
   };
 }
