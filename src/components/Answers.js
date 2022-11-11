@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getAnswersAct, updateScore } from '../redux/actions';
+import ButtonNext from './ButtonNext';
 import '../style/Questions.css';
 
 class Answers extends React.Component {
@@ -13,6 +14,7 @@ class Answers extends React.Component {
       readyToRender: false,
       secondsLeft: 30,
       buttonDislable: false,
+      nextQuestion: false,
       answerClass: '',
       interval: 0,
     };
@@ -78,6 +80,11 @@ class Answers extends React.Component {
     }
   };
 
+  nextButton = () => {
+    // const { nextQuestion } = this.state;
+    this.setState({ nextQuestion: true });
+  };
+
   classNameControll = (clicked) => {
     if (clicked === true) {
       this.setState({
@@ -100,11 +107,17 @@ class Answers extends React.Component {
     if (event.target.innerHTML === correctAnswer) {
       dispatch(updateScore(ten + (difficultyNumber[difficulty] * secondsLeft)));
     }
+    this.nextButton();
   };
 
   render() {
     const {
-      currentAnswer, randomAnswers, readyToRender, buttonDislable, answerClass,
+      currentAnswer,
+      randomAnswers,
+      readyToRender,
+      buttonDislable,
+      answerClass,
+      nextQuestion,
     } = this.state;
     const { answersResults } = this.props;
     return (
@@ -149,7 +162,9 @@ class Answers extends React.Component {
                     );
                   })
                 }
+                { nextQuestion ? <ButtonNext /> : null }
               </div>
+
             </>
           )
         }
