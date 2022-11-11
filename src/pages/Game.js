@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Answers from '../components/Answers';
+import { resetAll } from '../redux/actions';
 
 class Game extends React.Component {
   componentWillUnmount() {
+    const { dispatch } = this.props;
     this.savePlayerData();
+    dispatch(resetAll());
   }
 
   savePlayerData = () => {
@@ -17,7 +20,6 @@ class Game extends React.Component {
     }
     const playersData = JSON.parse(localStorage.getItem('playersData'));
     playersData.push(currentPlayerData);
-
     localStorage.setItem('playersData', JSON.stringify(playersData));
   };
 
@@ -31,15 +33,12 @@ class Game extends React.Component {
     );
   }
 }
-
 const mapStateToProps = (state) => ({
   name: state.player.name,
   score: state.player.score,
   email: state.player.gravatarEmail,
 });
-
 Game.propTypes = {
   history: PropTypes.shape,
 }.isRequired;
-
 export default connect(mapStateToProps)(Game);
