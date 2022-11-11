@@ -10,6 +10,8 @@ class Answers extends React.Component {
       currentAnswer: 0,
       randomAnswers: [],
       readyToRender: false,
+      secondsLeft: 30,
+      buttonDislable: false,
     };
   }
 
@@ -17,6 +19,7 @@ class Answers extends React.Component {
     const { dispatch } = this.props;
     await dispatch(getAnswersAct(dispatch));
     this.validToken();
+    this.timer();
   }
 
   validToken = () => {
@@ -29,6 +32,20 @@ class Answers extends React.Component {
       this.setState({ readyToRender: true });
       this.randomQuestion();
     }
+  };
+
+  timer = () => {
+    let { secondsLeft } = this.state;
+    const segundo = 1000;
+    const iterval = setInterval(() => {
+      if (secondsLeft > 0) {
+        this.setState({ secondsLeft: secondsLeft -= 1 });
+        console.log(secondsLeft);
+      } else {
+        this.setState({ buttonDislable: true });
+        clearInterval(iterval);
+      }
+    }, segundo);
   };
 
   randomizerAnswers = (answers) => {
@@ -59,7 +76,7 @@ class Answers extends React.Component {
   };
 
   render() {
-    const { currentAnswer, randomAnswers, readyToRender } = this.state;
+    const { currentAnswer, randomAnswers, readyToRender, buttonDislable } = this.state;
     const { answersResults } = this.props;
     return (
       <main>
@@ -94,6 +111,7 @@ class Answers extends React.Component {
                         key={ index }
                         type="button"
                         data-testid={ test() }
+                        disabled={ buttonDislable }
                       >
                         { answer }
                       </button>
