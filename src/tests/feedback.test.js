@@ -1,31 +1,11 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen,waitForElementToBeRemoved } from '@testing-library/react';
 import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import Feedback from '../pages/Feedback';
 
 describe('testa a tela de feedback',()=>{
-  beforeEach(()=>{
-    // const token ={
-    //     "response_code":0,
-    //     "response_message":"Token Generated Successfully!",
-    //     "token":"f00cb469ce38726ee00a7c6836761b0a4fb808181a125dcde6d50a9f3c9127b6"
-    //   }
-    //   global.fetch = jest.fn(async () => ({
-    //     json: async () => token
-    //   }));
-    //   const { history } = renderWithRouterAndRedux(<App />)
-    //   const inputEmail = screen.getByLabelText("Email:")
-    //   const inputName = screen.getByLabelText("Nome:")
-    //   const button = screen.getByTestId("btn-play")
-    //   expect(button).toBeDisabled();
-    //   userEvent.type(inputEmail, "23"),
-    //   userEvent.type(inputName, "33"),
-    //   expect(button).toBeEnabled();
-    //   userEvent.click(button);
-  } 
-  )
   test('sem nenhuma resposta certa',()=>{
     const state={
     player:{
@@ -77,7 +57,6 @@ describe('testa a tela de feedback',()=>{
     const playAgain =screen.getByTestId('btn-play-again');
     expect(playAgain).toHaveTextContent('Play Again');
     userEvent.click(playAgain);
-    await waitForElementToBeRemoved(playAgain,{timeout:2000});
     const { pathname } = history.location;
     expect(pathname).toBe('/');
   })
@@ -86,7 +65,6 @@ describe('testa a tela de feedback',()=>{
     const ranking =screen.getByTestId('btn-ranking');
     expect(ranking).toHaveTextContent('Ranking');
     userEvent.click(ranking);
-    await waitForElementToBeRemoved(ranking,{timeout:2000});
     const { pathname } = history.location;
     expect(pathname).toBe('/ranking');
   })
