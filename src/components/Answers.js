@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getAnswersAct } from '../redux/actions';
+import ButtonNext from './ButtonNext';
 
 class Answers extends React.Component {
   constructor() {
@@ -12,6 +13,7 @@ class Answers extends React.Component {
       readyToRender: false,
       secondsLeft: 30,
       buttonDislable: false,
+      nextQuestion: false,
     };
   }
 
@@ -75,8 +77,17 @@ class Answers extends React.Component {
     }
   };
 
+  nextButton = () => {
+    // const { nextQuestion } = this.state;
+    this.setState({ nextQuestion: true });
+  };
+
   render() {
-    const { currentAnswer, randomAnswers, readyToRender, buttonDislable } = this.state;
+    const { currentAnswer,
+      randomAnswers,
+      readyToRender,
+      buttonDislable,
+      nextQuestion } = this.state;
     const { answersResults } = this.props;
     return (
       <main>
@@ -112,13 +123,16 @@ class Answers extends React.Component {
                         type="button"
                         data-testid={ test() }
                         disabled={ buttonDislable }
+                        onClick={ this.nextButton }
                       >
                         { answer }
                       </button>
                     );
                   })
                 }
+                { nextQuestion ? <ButtonNext /> : null }
               </div>
+
             </>
           )
         }
