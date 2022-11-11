@@ -1,4 +1,4 @@
-import { GET_ANSWERS } from '../actions';
+import { GET_ANSWERS, UPDATE_SCORE } from '../actions';
 
 const INITIAL_STATE = {
   answers: [],
@@ -10,6 +10,11 @@ const game = (state = INITIAL_STATE, actions) => {
     return {
       ...state,
       answers: actions.payload.answers,
+    };
+  case UPDATE_SCORE:
+    return {
+      ...state,
+
     };
   default:
     return state;

@@ -2,6 +2,7 @@ import getAnswers from '../../services/getAnswers';
 
 export const SAVE_AT_LOGIN = 'SAVE_AT_LOGIN';
 export const GET_ANSWERS = 'GET_ANSWERS';
+export const UPDATE_SCORE = 'UPDATE_SCORE';
 
 export function saveAtLogin(email, name) {
   return {
@@ -25,3 +26,10 @@ export const getAnswersAct = (dispatch) => async () => {
     console.log(error);
   }
 };
+
+export function updateScore(score) {
+  return {
+    type: UPDATE_SCORE,
+    payload: score,
+  };
+}

@@ -1,4 +1,4 @@
-import { SAVE_AT_LOGIN } from '../actions';
+import { SAVE_AT_LOGIN, UPDATE_SCORE } from '../actions';
 
 const INITIAL_STATE = {
   name: '', // nome-da-pessoa,
@@ -14,6 +14,11 @@ const player = (state = INITIAL_STATE, actions) => {
       ...state,
       gravatarEmail: actions.payload.email,
       name: actions.payload.name,
+    };
+  case UPDATE_SCORE:
+    return {
+      ...state,
+      score: state.score + actions.payload,
     };
   default:
     return state;
