@@ -80,11 +80,12 @@ class Answers extends React.Component {
     }
   };
 
-   nextButton = () => {
+  nextButton = () => {
     // const { nextQuestion } = this.state;
     this.setState({ nextQuestion: true });
-   };
-    classNameControll = (clicked) => {
+  };
+
+  classNameControll = (clicked) => {
     if (clicked === true) {
       this.setState({
         answerClass: '-clicked',
