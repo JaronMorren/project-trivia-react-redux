@@ -17,7 +17,9 @@ class Ranking extends React.Component {
 
   getPlayersData = () => {
     const playersData = JSON.parse(localStorage.getItem('playersData'));
-    this.setState({ playersData });
+    const playerDataSort = playersData.sort((a, b) => b.score - a.score);
+
+    this.setState({ playersData: playerDataSort });
   };
 
   render() {
