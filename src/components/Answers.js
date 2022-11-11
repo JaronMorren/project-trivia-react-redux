@@ -87,7 +87,17 @@ class Answers extends React.Component {
     });
   };
 
+  finishGame = () => {
+    const { currentAnswer } = this.state;
+    const lastQuestionIndex = 4;
+    if (currentAnswer >= lastQuestionIndex) {
+      const { history } = this.props;
+      history.push('/feedback');
+    }
+  };
+
   onClickNextButton = () => {
+    this.finishGame();
     let { currentAnswer } = this.state;
     this.setState(({
       currentAnswer: currentAnswer += 1,
