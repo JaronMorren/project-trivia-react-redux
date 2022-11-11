@@ -13,12 +13,9 @@ class Game extends React.Component {
     const { name, score, email } = this.props;
     const currentPlayerData = { name, score, email };
     if (!localStorage.getItem('playersData')) {
-      console.log('foi');
       localStorage.setItem('playersData', JSON.stringify([]));
     }
     const playersData = JSON.parse(localStorage.getItem('playersData'));
-    console.log(playersData);
-    console.log(currentPlayerData);
     playersData.push(currentPlayerData);
 
     localStorage.setItem('playersData', JSON.stringify(playersData));
