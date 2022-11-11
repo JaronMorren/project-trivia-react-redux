@@ -9,39 +9,32 @@ import ButtonRanking from '../components/ButtonRanking';
 
 class Feedback extends React.Component {
   render() {
-    const { playerScore } = this.props;
-    const minimumCorrectAnswers = 3;
-    console.log(playerScore);
-
-    if (playerScore < minimumCorrectAnswers) {
-      return (
-        <>
-          <Header />
-          <h1 data-testid="feedback-text">Could be better...</h1>
-          <ButtonPlayAgain />
-          <ButtonRanking />
-        </>
-      );
-    }
-
-    if (playerScore >= minimumCorrectAnswers) {
-      return (
-        <>
-          <Header />
-          <h1 data-testid="feedback-text">Well Done!</h1>
-          <ButtonPlayAgain />
-          <ButtonRanking />
-        </>
-      );
-    }
+    const { assertions, score } = this.props;
+    const minimumassertions = 3;
+    return (
+      <div>
+        <Header />
+        <div>
+          { (assertions < minimumassertions
+            ? <p data-testid="feedback-text">Could be better...</p>
+            : <p data-testid="feedback-text">Well Done!</p>)}
+        </div>
+        <div data-testid="feedback-total-score">{score}</div>
+        <div data-testid="feedback-total-question">{assertions}</div>
+        <ButtonPlayAgain />
+        <ButtonRanking />
+      </div>
+    );
   }
 }
 Feedback.propTypes = {
-  playerScore: PropTypes.number.isRequired,
+  assertions: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (globalState) => ({
-  playerScore: globalState.player.correctAnswers,
+  score: globalState.player.score,
+  assertions: globalState.player.assertions,
 });
 
 export default connect(mapStateToProps)(Feedback);
