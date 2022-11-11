@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getAnswersAct } from '../redux/actions';
+import '../style/Questions.css';
 
 class Answers extends React.Component {
   constructor() {
@@ -12,6 +13,7 @@ class Answers extends React.Component {
       readyToRender: false,
       secondsLeft: 30,
       buttonDislable: false,
+      answerClass: '',
     };
   }
 
@@ -75,12 +77,22 @@ class Answers extends React.Component {
     }
   };
 
-  onClickAnswerButton = () => {
+  classNameControll = (clicked) => {
+    if (clicked === true) {
+      this.setState({
+        answerClass: '-clicked',
+      });
+    }
+  };
 
+  onClickAnswerButton = () => {
+    this.classNameControll(true);
   };
 
   render() {
-    const { currentAnswer, randomAnswers, readyToRender, buttonDislable } = this.state;
+    const {
+      currentAnswer, randomAnswers, readyToRender, buttonDislable, answerClass,
+    } = this.state;
     const { answersResults } = this.props;
     return (
       <main>
@@ -114,6 +126,7 @@ class Answers extends React.Component {
                       <button
                         key={ index }
                         type="button"
+                        className={ `${test()}${answerClass}` }
                         data-testid={ test() }
                         disabled={ buttonDislable }
                         onClick={ this.onClickAnswerButton }
