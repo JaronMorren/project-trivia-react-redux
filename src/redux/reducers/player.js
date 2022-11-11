@@ -25,6 +25,7 @@ const player = (state = INITIAL_STATE, actions) => {
       ...state,
       score: 0,
       assertions: 0,
+
     };
   default:
     return state;
