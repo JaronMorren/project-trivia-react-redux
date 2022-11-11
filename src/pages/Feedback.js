@@ -8,10 +8,10 @@ import Header from '../components/Header';
 class Feedback extends React.Component {
   render() {
     const { playerScore } = this.props;
-    const minimumScore = 3;
+    const minimumCorrectAnswers = 3;
     console.log(playerScore);
 
-    if (playerScore < minimumScore) {
+    if (playerScore < minimumCorrectAnswers) {
       return (
         <>
           <Header />
@@ -20,7 +20,7 @@ class Feedback extends React.Component {
       );
     }
 
-    if (playerScore >= minimumScore) {
+    if (playerScore >= minimumCorrectAnswers) {
       return (
         <>
           <Header />
