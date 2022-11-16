@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { saveAtLogin } from '../redux/actions';
+import { resetAll, saveAtLogin } from '../redux/actions';
 import getToken from '../services/getToken';
 import ButtonConfig from '../components/ButtonConfig';
 
@@ -13,6 +13,11 @@ class Login extends React.Component {
       nameInput: '',
       isButtonDisabled: true,
     };
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(resetAll());
   }
 
   buttonDisabledControl = () => {

@@ -3,13 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Answers from '../components/Answers';
-import { resetAll } from '../redux/actions';
 
 class Game extends React.Component {
   componentWillUnmount() {
-    const { dispatch } = this.props;
     this.savePlayerData();
-    dispatch(resetAll());
   }
 
   savePlayerData = () => {
